@@ -57,9 +57,3 @@ project(":client"){
         runtimeOnly("mysql:mysql-connector-java")
     }
 }
-
-project(":server"){
-    dependencies {
-
-    }
-}
