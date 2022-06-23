@@ -10,4 +10,4 @@ spring:
       ddl-auto: update
 vault:
   path:
-    datasource: ${DATASOURCE_PATH:db/mysql}
+    datasource: ${DATASOURCE_PATH:kv/db/mysql}

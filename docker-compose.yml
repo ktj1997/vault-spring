@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  vault-server:
+    image: vault:latest
+    ports:
+      - "8200:8200"
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - ./vault/config:/vault/config
+      - ./vault/data:/vault/data
+      - ./vault/file:/vault/file
+    environment:
+      - VAULT_ADDR=http://0.0.0.0:8200
+    command:
+      - "server"
+    networks:
+      - vault-network
+
+  vault-client:
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - vault.uri=http://vault-server:8200
+      - vault.token=hvs.zH3UJcCcu0slrAwnvbc4hBjJ
+    depends_on:
+      - vault-server
+    networks:
+      - vault-network
+networks:
+  vault-network:
+    driver: bridge
