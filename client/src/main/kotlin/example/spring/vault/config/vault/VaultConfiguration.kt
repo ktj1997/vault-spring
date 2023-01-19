@@ -9,6 +9,7 @@ import org.springframework.vault.config.AbstractVaultConfiguration
 import org.springframework.vault.config.EnvironmentVaultConfiguration
 import java.net.URI
 
+
 @Configuration
 @Import(EnvironmentVaultConfiguration::class)
 class VaultConfiguration() : AbstractVaultConfiguration() {

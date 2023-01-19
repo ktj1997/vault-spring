@@ -8,3 +8,4 @@
 - 최초실행시에 초기화가 되고 서버를 껏다 키더라도 초기화가 불필요하다.
 - Seal/UnSeal개념으로 잠금해제와 같은 개념이다. 
   - 정상적으로 UnSeal되야지 사용 가능하다.
+  - UnSeal Key: u3jclIHU/tDodxg7AoW+UCAjID1hzoEEU9akp6mSgRo=
