@@ -9,6 +9,7 @@ import org.springframework.vault.authentication.TokenAuthentication
 import org.springframework.vault.client.VaultEndpoint
 import org.springframework.vault.config.AbstractVaultConfiguration
 import org.springframework.vault.config.EnvironmentVaultConfiguration
+import org.springframework.vault.core.VaultOperations
 import org.springframework.vault.core.VaultTemplate
 import java.net.URI
 
@@ -20,23 +21,13 @@ class VaultConfiguration(
 
     @Value("\${vault.token}")
     private val token: String
-) {
+): AbstractVaultConfiguration() {
 
-    @Bean
-    fun vaultEndPoint(): VaultEndpoint {
+    override fun vaultEndpoint(): VaultEndpoint {
         return VaultEndpoint.from(URI.create(uri))
     }
 
-    @Bean
-    fun clientAuthentication(): ClientAuthentication {
+    override fun clientAuthentication(): ClientAuthentication {
         return TokenAuthentication(token)
-    }
-
-    @Bean
-    fun vaultTemplate(
-        vaultEndpoint: VaultEndpoint,
-        clientAuthentication: ClientAuthentication
-    ): VaultTemplate {
-        return VaultTemplate(vaultEndpoint, clientAuthentication)
     }
 }
