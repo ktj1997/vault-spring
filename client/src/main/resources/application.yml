@@ -10,5 +10,5 @@ spring:
       ddl-auto: update
 vault:
   path:
-    datasource: ${VAULT_DATASOURCE_PATH:kv/db/mysql}
-    redis: ${VAULT_REDIS_PATH:kv/db/redis}
+    datasource: ${VAULT_DATASOURCE_PATH:kv/data/db/mysql}
+    redis: ${VAULT_REDIS_PATH:kv/data/db/redis}

@@ -1,6 +1,10 @@
 package example.spring.vault.config.persistence.redis
 
+import example.spring.vault.config.vault.DataSourceVaultCredentials
+import example.spring.vault.config.vault.RedisVaultCredentials
+import example.spring.vault.config.vault.VaultHandler
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.RedisConnectionFactory
@@ -11,20 +15,24 @@ import org.springframework.data.redis.serializer.StringRedisSerializer
 
 @Configuration
 class RedisConfiguration(
-    private val redisVaultProperties: RedisVaultProperties
+    @Value("\${vault.path.redis}")
+    private val path: String,
+    private val vaultHandler: VaultHandler
 ) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @Bean
     fun redisConnectionFactory(): RedisConnectionFactory {
+
+        val credentials  = vaultHandler.get(path, RedisVaultCredentials::class.java)
         logger.info("""
             ==========[Redis Configuration]==========
-                Host: ${redisVaultProperties.host} 
-                Port: ${redisVaultProperties.port} 
+                Host: ${credentials.host} 
+                Port: ${credentials.port} 
                 ==============================================
         """.trimIndent())
-        return LettuceConnectionFactory(redisVaultProperties.host, Integer.parseInt(redisVaultProperties.port))
+        return LettuceConnectionFactory(credentials.host, credentials.port)
     }
 
     @Bean
